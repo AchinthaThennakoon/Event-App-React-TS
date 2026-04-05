@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useForm } from "../hooks/useForm";
 
 interface LoginFormData {
@@ -14,7 +13,14 @@ const initialValues: LoginFormData = {
 
 export function Loginpage() {
 
-  const { formData, handleChange, handleSubmit } = useForm({ initialValues });
+  const validate = (values: LoginFormData) => {
+    const errors: Partial<LoginFormData> = {};
+    if (!values.email) errors.email = "Email is required";
+    if (!values.password) errors.password = "Password is required";
+    return errors;
+  };
+
+  const { formData, handleChange, handleSubmit } = useForm({ initialValues, validate });
 
   return (
     <div className="flex justify-center items-center h-screen">
